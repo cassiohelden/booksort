@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    var order = [];
+
+    // When submit, turns array into query string
+    // and refresh the page with new query parameters
+    var submit = function(){
+        var q_param = order.join(",");
+        window.location.search = "?ordering=" + q_param
+    };
+
+    // When checkbox change, add input value to a list
+    $(document).ready(function() {
+        $("input[type='radio']").change(function() {
+            var idx = order.indexOf(this);
+
+            if (idx !== -1) {         // if already in array
+                order.splice(idx, 1); // make sure we remove it
+            }
+            if (this.checked) {    // if checked
+                order.push(this.name);  // add to end of array
+            }
+            return order;
+        });
+    });
+</script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Book Sorting</title>
+</head>
+<body>
+    <div class="container">
+
+        {# All ordering cases illustrated by checkboxes #}
+            <form class="form-inline" action="../../books" method="GET">
+                <div class="input-group">
+                    <div class="col-md-3">
+                        <label class="radio-inline">
+                            <input type="radio" name="title">Title Ascending<br>
+                            <input type="radio" name="-title">Title Descending
+                        </label>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="radio-inline">
+                            <input type="radio" name="author">Author Ascending<br>
+                            <input type="radio" name="-author">Author Descending
+                        </label>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="radio-inline">
+                            <input type="radio" name="edition_year">Edition Ascending
+                            <input type="radio" name="-edition_year">Edition Descending
+                        </label>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="radio-inline">
+                            <input type="radio" name="null">Null Case<br>
+                        </label>
+                    </div>
+
+                </div>
+            </form>
+
+        {# Submit button #}
+        <button title="Click here to clear the ordering" onclick="submit()" class="btn btn-default" type="submit">Sort</button>
+
+        {# Simple table to show books #}
+        <div class="col-lg-12">
+            <table class="table">
+                <thead>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Edition Year</th>
+                </thead>
+                {% for book in object_list %}
+                    <tbody>
+                        <td>{{ book.id }}</td>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.edition_year }}</td>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>
