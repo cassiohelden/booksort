@@ -18,12 +18,13 @@ pip install -r requirements.txt
 First of all, you need to run the migration to create default django and book models into your database. Django create an db.sqlite3 file for you no worry about it! 
 
 ```
-manage.py migrate
+python manage.py migrate
 ```
 
 With your database and model created, you need to run this command to populate with data:
 ```
-manage.py populate_db
+
+python manage.py populate_db
 ```
 
 You can check of success message in shell.
@@ -31,19 +32,26 @@ You can check of success message in shell.
 If you want to see admin part you need to create a superuser, like this:
 
 ```
-manage.py createsuperuser
+python manage.py createsuperuser
 ```
-and than access admin page:
+
+To run the application use:
+```
+python manage.py runserver
+```
+
+## Usage
+To access admin page:
 ```
 localhost:8000/admin
 ```
-## Usage
+
 Access books list page:
 ```
 localhost:8000/books
 ```
-
 Now you can sort your data using any condition you want.
+
 ## Authors
 
 * **Cassio Van Helden Gameiro** 
